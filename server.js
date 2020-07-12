@@ -1,11 +1,15 @@
 import config from './config';
 import apiRouter from './api';
-import express from 'express';
 
+import express from 'express';
 const server = express();
 
+server.set('view engine', 'ejs');
+
 server.get('/', (req, res) => {
-    res.send('Hello');
+    res.render('index', {
+        content: 'Hello express and ejs!!'
+    });
 });
 
 server.use('/api', apiRouter);

@@ -2,6 +2,9 @@ import React from 'react';
 import Header from './Header';
 import ContestList from './ContestList';
 
+const pushState = (obj, url) =>
+    window.history.pushState(obj, '', url);
+
 // extend React.Component to have it be an element with a state instead of stateless
 class App extends React.Component {
     state = { 
@@ -15,11 +18,19 @@ class App extends React.Component {
     componentWillUnmount() {
 
     }
+    fetchContest = (contestId) => {
+        pushState(
+            { currentContestId: contestId },
+            `/contest/${contestId}`
+        );
+    };
     render() {
         return (
             <div className="App">
                 <Header message={this.state.pageHeader} />
-                <ContestList contests={this.state.contests} />
+                <ContestList 
+                    onContestClick = {this.fetchContest}
+                    contests={this.state.contests} />
             </div>
         );  
     };
